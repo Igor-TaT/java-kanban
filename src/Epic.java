@@ -20,13 +20,9 @@ public class Epic extends Task {
         return new ArrayList<>(subTasks);
     }
 
-    public void deleteById(long id) {
-        for (int i = 0; i < subTasks.size(); i++) {
-            if (subTasks.get(i).getTaskId() == id) {
-                subTasks.remove(i);
-            }
-        }
-    }
+    public void deleteById(SubTask subTask) {
+        if(subTasks.contains(subTask)) subTasks.remove(subTask);
+}
 
     public void updateSubTask(SubTask subTask) {
         if (subTasks.contains(subTask)) {
