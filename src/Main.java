@@ -2,19 +2,37 @@
 public class Main {
 
     public static void main(String[] args) {
-        TaskManager taskManager = new TaskManager();
-        Task task = taskManager.create(new Task("Новая задача", "описание задачи", Status.NEW));
-        System.out.println("Greate task: " + task);
+        InMemoryTaskManager taskManager = new InMemoryTaskManager();
+        Task tasker = taskManager.create(new Task("Новая задача", "описание задачи", Status.NEW));
+        tasker = taskManager.create(new Task("Новая задача2", "описание задачи2", Status.NEW));
+        tasker = taskManager.create(new Task("Новая задача3", "описание задачи3", Status.NEW));
+        tasker = taskManager.create(new Epic("Новая Эпик задача3", "описание эпик задачи3"));
+        tasker = taskManager.create(new SubTask("Новая подзадача3", "описание подзадачи3",Status.NEW,4));
 
-        Task taskFromManager = taskManager.getTaskFromId(task.getTaskId());
-        System.out.println("Get task: " + taskFromManager);
+        taskManager.getTaskFromId(1);
 
-        taskFromManager.setTitle("New name");
-        taskManager.updateTask(taskFromManager);
-        System.out.println("Update task: " + taskFromManager);
+        System.out.println("Задачи:");
+        for (Task task : taskManager.getTasks()) {
+            System.out.println(task);
+        }
+        System.out.println("Эпики:");
+        for (Task epic : taskManager.getEpics()) {
+            System.out.println(epic);
 
-        taskManager.deleteTask(taskFromManager.getTaskId());
-        System.out.println("Delete: " + task);
+            for (Task task : taskManager.getSubTasksByEpicID(epic.getTaskId())) {
+                System.out.println("--> " + task);
+            }
+        }
+        System.out.println("Подзадачи:");
+        for (Task subtask : taskManager.getSubTasks()) {
+            System.out.println(subtask);
+        }
+
+        System.out.println("История:");
+        for (Task task : taskManager.getHistory()) {
+            System.out.println(task);
+        }
+
 
 
     }

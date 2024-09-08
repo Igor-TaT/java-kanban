@@ -12,6 +12,13 @@ public class Task {
         this.status = status;
     }
 
+    public Task(Long taskId, String title, String description, Status status) {
+        this.title = title;
+        this.description = description;
+        this.status = status;
+        this.taskId = taskId;
+    }
+
 
     public String getTitle() {
         return title;
@@ -50,7 +57,8 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return taskId == task.taskId && Objects.equals(title, task.title) && Objects.equals(description, task.description) && status == task.status;
+        //return taskId == task.taskId && Objects.equals(title, task.title) && Objects.equals(description, task.description) && status == task.status;
+        return taskId == task.taskId;
     }
 
     @Override
