@@ -1,5 +1,10 @@
+import manager.HistoryManager;
+import manager.Managers;
+import manager.TaskManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import status.Status;
+import task.Task;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,7 +19,7 @@ class InMemoryHistoryManagerTest {
     public void beforeEach(){
         taskManager = Managers.getDefault();
         history = Managers.getDefaultHistory();
-        taskManager.create(new Task("Эта задача будет перезаписана","Описание простой задачи",Status.NEW));
+        taskManager.create(new Task("Эта задача будет перезаписана","Описание простой задачи", Status.NEW));
         firstTask = taskManager.getTasks().get(0);
         id = firstTask.getTaskId();
     }

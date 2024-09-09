@@ -1,3 +1,7 @@
+package manager;
+
+import task.Task;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -6,13 +10,11 @@ public class InMemoryHistoryManager implements HistoryManager{
     private static final List<Task> taskHistoryList = new ArrayList<>();
     @Override
     public void add(Task task) {
-
-        if(task == null){ System.out.println("Задача не найдена");}
-        else {
+        if(task != null) {
             if (taskHistoryList.size() >= LIMIT_OF_HISTORY_VIEWS) {
                 taskHistoryList.removeFirst();
                 taskHistoryList.add(task);
-            }else{
+            } else {
                 taskHistoryList.add(task);
             }
         }
@@ -20,6 +22,6 @@ public class InMemoryHistoryManager implements HistoryManager{
 
     @Override
     public List<Task> getHistory() {
-        return taskHistoryList;
+        return new ArrayList<>(taskHistoryList);
     }
 }
