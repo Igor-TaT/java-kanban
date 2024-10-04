@@ -5,26 +5,16 @@ import task.Task;
 import java.util.Objects;
 
 class Node {
-    public Task task;
-    public Node next;
-    public Node prev;
-
-    public Node(Node prev, Task task, Node next) {
-        this.prev = prev;
-        this.task = task;
-        this.next = next;
-    }
+    private Task task;
+    private Node prev;
+    private Node next;
 
     public Task getTask() {
         return task;
     }
 
-    public Node getNext() {
-        return next;
-    }
-
-    public void setNext(Node next) {
-        this.next = next;
+    public void setTask(Task task) {
+        this.task = task;
     }
 
     public Node getPrev() {
@@ -35,16 +25,11 @@ class Node {
         this.prev = prev;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Node node = (Node) o;
-        return Objects.equals(task, node.task);
+    public Node getNext() {
+        return next;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(task);
+    public void setNext(Node next) {
+        this.next = next;
     }
 }

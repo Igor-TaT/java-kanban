@@ -5,52 +5,74 @@ import task.Task;
 import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager {
+
+    private final MyLinkedList taskHistoryList = new MyLinkedList();
+
+    @Override
+    public void add(Task task) {
+        taskHistoryList.linkLast(task);
+    }
+
+    @Override
+    public void remove(long id) {
+        taskHistoryList.removeNode(taskHistoryList.getNode(id));
+    }
+
+    @Override
+    public List<Task> getHistory() {
+        return taskHistoryList.getTasks();
+    }
+
     private static class MyLinkedList {
-        private final Map<Long, Node> taskHistoryList = new HashMap<>();
+        private final Map<Long, Node> nodeMap = new HashMap<>();
         private Node head;
         private Node tail;
 
-
         private void linkLast(Task task) {
-            Node newNode = new Node(null, task, tail);
-            if (tail != null) {
-                tail.next = newNode;
+            Node element = new Node();
+            element.setTask(task);
+            if (nodeMap.containsKey(task.getTaskId())) {
+                removeNode(nodeMap.get(task.getTaskId()));
             }
-            tail = newNode;
             if (head == null) {
-                head = newNode;
+                tail = element;
+                head = element;
+                element.setNext(null);
+                element.setPrev(null);
+            } else {
+                element.setPrev(tail);
+                element.setNext(null);
+                tail.setNext(element);
+                tail = element;
             }
-
-            taskHistoryList.put(task.getTaskId(), newNode);
+            nodeMap.put(task.getTaskId(), element);
         }
 
         private List<Task> getTasks() {
-            List<Task> result = new ArrayList<>();
+            List<Task> taskList = new ArrayList<>();
             Node element = head;
             while (element != null) {
-                result.add(element.getTask());
+                taskList.add(element.getTask());
                 element = element.getNext();
             }
-            return result;
+            return taskList;
         }
 
         private void removeNode(Node node) {
             if (node != null) {
-                taskHistoryList.remove(node.getTask().getTaskId());
+                nodeMap.remove(node.getTask().getTaskId());
                 Node prev = node.getPrev();
                 Node next = node.getNext();
 
                 if (head == node) {
-                    head = next;
+                    head = node.getNext();
                 }
                 if (tail == node) {
-                    tail = prev;
+                    tail = node.getPrev();
                 }
-
                 if (prev != null) {
                     prev.setNext(next);
                 }
-
                 if (next != null) {
                     next.setPrev(prev);
                 }
@@ -58,25 +80,10 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
 
         private Node getNode(long id) {
-            return taskHistoryList.get(id);
+            return nodeMap.get(id);
         }
+
     }
 
-    private final MyLinkedList spisok = new MyLinkedList();
 
-    @Override
-    public void add(Task task) {
-        spisok.linkLast(task);
-    }
-
-    @Override
-    public void remove(long id) {
-        spisok.removeNode(spisok.getNode(id));
-    }
-
-    @Override
-    public List<Task> getHistory() {
-        return spisok.getTasks();
-    }
 }
-
