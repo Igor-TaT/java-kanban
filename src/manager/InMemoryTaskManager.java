@@ -28,6 +28,11 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
+    public void remove(int id) {
+        history.remove(id);
+    }
+
+    @Override
     public Task create(Task task) {
         task.setTaskId(generateId());
         tasks.put(task.getTaskId(), task);

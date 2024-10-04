@@ -10,61 +10,69 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryHistoryManagerTest {
 
-    TaskManager taskManager;
-    HistoryManager history;
-    Task firstTask;
+    HistoryManager history = Managers.getDefaultHistory();
+    Task task;
+    Epic epic;
+    Subtask subTask;
     Long id;
 
     @BeforeEach
     public void beforeEach(){
-        taskManager = Managers.getDefault();
-        history = Managers.getDefaultHistory();
-        taskManager.create(new Task("Эта задача будет перезаписана","Описание простой задачи", Status.NEW));
-        firstTask = taskManager.getTasks().get(0);
-        id = firstTask.getTaskId();
+        task = new Task("Zadacha task ", "Kakoy-to tekst", Status.NEW);
+        task.setId(1);
+        epic = new Epic("Zadacha epic", "Kakoy-to tekst epic", Status.NEW);
+        epic.setId(2);
+        subTask = new Subtask("Zadacha sub", "Kakoy-to tekst sub", Status.NEW, 2);
+        subTask.setId(3);
     }
 
     @Test
-    public void ProsmotriVIstroiiSohranyautsa(){
-        assertTrue(history.getHistory().isEmpty());
-        taskManager.getTaskFromId(id);
-        assertFalse(history.getHistory().isEmpty());
+    void dobavitzapisvistoriyu() {
+        history.add(task);
+        final List<Task> historyManager = history.getHistory();
+        assertNotNull(historyManager, "Istorya pustaya.");
+        assertEquals(1, historyManager.size(), "Istoriya pustaya");
     }
 
     @Test
-    public void vIstroiiDolzhnoHranitsaNeBolee10Zapisey(){
-        for(int i=0; i < 20; i++){
-            taskManager.getTaskFromId(id);
-        }
-        assertTrue(history.getHistory().size() <= 10,"В истории должно храниться не более 10 записей");
+    void dobavitdublicatzadachi() {
+        history.add(task);
+        history.add(task);
+        final List<Task> historyManager = history.getHistory();
+        assertNotNull(historyManager, "Istoriya Pustaya");
+        assertEquals(1, historyManager.size(), "Dublicat");
     }
 
     @Test
-    public void vIstroiiPriPerepolneniiUdalyaetsaSamayaStarayaZapis(){
-        Long idZapisi = taskManager.getTasks().getLast().getTaskId();
-        String titleZapisi = taskManager.getTasks().getLast().getTitle();
-        taskManager.getTaskFromId(idZapisi);
-        taskManager.create(new Task("Эта задача не будет перезаписана","Описание",Status.NEW));
-        assertEquals(titleZapisi,history.getHistory().getFirst().getTitle(),"Заголовки должны совпасть");
-        for (int i=0;i<10;i++){
-            taskManager.getTaskFromId(taskManager.getTasks().getLast().getTaskId());
-        }
-        assertNotEquals(titleZapisi,history.getHistory().getFirst().getTitle(),"Заголовки не должны совпасть");
+    void udalitzadachuizhead(){
+        history.add(task);
+        history.add(epic);
+        history.add(subTask);
+        history.remove(task.getId());
+        final List<Task> historyManager = history.getHistory();
+        assertNotNull(historyManager, "Istoriya Pustaya");
+        assertEquals(2, historyManager.size(), "Zapis ne udalena");
     }
-
     @Test
-    public void HistoryHranitVersiuDoOblovleniyaIPosle(){
-        taskManager.getTaskFromId(id);
-        Task taskFromHistoryFirst = history.getHistory().getLast();
-        assertEquals(id + " - " + firstTask.getTitle() + " - " + firstTask.getDescription() + " - " + firstTask.getStatus(),taskFromHistoryFirst.getTaskId() + " - " + taskFromHistoryFirst.getTitle() + " - " + taskFromHistoryFirst.getDescription() + " - " + taskFromHistoryFirst.getStatus());
+    void udalitzadachuizseredini(){
+        history.add(task);
+        history.add(epic);
+        history.add(subTask);
+        history.remove(epic.getId());
+        final List<Task> historyManager = history.getHistory();
+        assertNotNull(historyManager, "Istoriya Pustaya");
+        assertEquals(2, historyManager.size(), "Zapis ne udalena");
+    }
+    @Test
+    void udalitzapisizhvosta(){
 
-        //Проверка после обновления задачи
-        taskManager.updateTask(new Task(id,"Обновленная простая задача","Описание обновленной простой задачи",Status.DONE));
-        taskManager.getTaskFromId(id);
-        Task taskFromHistoryLast = history.getHistory().getLast();
-        System.out.println(taskFromHistoryFirst.getTitle() + " - " + taskFromHistoryLast.getTitle());
-        assertNotEquals(taskFromHistoryFirst.getTaskId() + " - " + taskFromHistoryFirst.getTitle() + " - " + taskFromHistoryFirst.getDescription() + " - " + taskFromHistoryFirst.getStatus(),taskFromHistoryLast.getTaskId() + " - " + taskFromHistoryLast.getTitle() + " - " + taskFromHistoryLast.getDescription() + " - " + taskFromHistoryLast.getStatus());
-
+        history.add(epic);
+        history.add(subTask);
+        history.add(task);
+        history.remove(task.getId());
+        final List<Task> historyManager = history.getHistory();
+        assertNotNull(historyManager, "Istoriya Pustaya");
+        assertEquals(2, historyManager.size(), "Zapis ne udalena");
     }
 
 }
