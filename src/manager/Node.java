@@ -2,8 +2,6 @@ package manager;
 
 import task.Task;
 
-import java.util.Objects;
-
 class Node {
     private Task task;
     private Node prev;
