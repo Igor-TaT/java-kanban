@@ -17,16 +17,16 @@ class InMemoryHistoryManagerTest {
     HistoryManager history = Managers.getDefaultHistory();
     Task task;
     Epic epic;
-    Subtask subTask;
+    SubTask subTask;
     Long id;
 
     @BeforeEach
     public void beforeEach() {
         task = new Task("Zadacha task ", "Kakoy-to tekst", Status.NEW);
         task.setTaskId(1);
-        epic = new Epic("Zadacha epic", "Kakoy-to tekst epic", Status.NEW);
+        epic = new Epic("Zadacha epic", "Kakoy-to tekst epic");
         epic.setTaskId(2);
-        subTask = new Subtask("Zadacha sub", "Kakoy-to tekst sub", Status.NEW, 2);
+        subTask = new SubTask("Zadacha sub", "Kakoy-to tekst sub", Status.NEW, 2);
         subTask.setTaskId(3);
     }
 
