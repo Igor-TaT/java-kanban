@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 import status.Status;
 import task.Task;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryHistoryManagerTest {
@@ -21,11 +19,11 @@ class InMemoryHistoryManagerTest {
     @BeforeEach
     public void beforeEach() {
         task = new Task("Zadacha task ", "Kakoy-to tekst", Status.NEW);
-        task.setId(1);
+        task.setTaskId(1);
         epic = new Epic("Zadacha epic", "Kakoy-to tekst epic", Status.NEW);
-        epic.setId(2);
+        epic.setTaskId(2);
         subTask = new Subtask("Zadacha sub", "Kakoy-to tekst sub", Status.NEW, 2);
-        subTask.setId(3);
+        subTask.setTaskId(3);
     }
 
     @Test
