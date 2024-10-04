@@ -31,7 +31,7 @@ public class Epic extends Task {
     }
 
     public void deleteById(SubTask subTask) {
-        if(subTasks.contains(subTask)) subTasks.remove(subTask);
+        if (subTasks.contains(subTask)) subTasks.remove(subTask);
 }
 
     public void updateSubTask(SubTask subTask) {
