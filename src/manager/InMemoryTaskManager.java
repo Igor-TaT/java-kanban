@@ -28,7 +28,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void remove(int id) {
+    public void remove(long id) {
         history.remove(id);
     }
 

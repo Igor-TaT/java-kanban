@@ -57,7 +57,7 @@ public class InMemoryHistoryManager implements HistoryManager {
             }
         }
 
-        private Node getNode(int id) {
+        private Node getNode(long id) {
             return taskHistoryList.get(id);
         }
     }
@@ -70,7 +70,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     @Override
-    public void remove(int id) {
+    public void remove(long id) {
         spisok.removeNode(spisok.getNode(id));
     }
 
