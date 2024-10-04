@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import status.Status;
 import task.Task;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryHistoryManagerTest {
@@ -17,7 +19,7 @@ class InMemoryHistoryManagerTest {
     Long id;
 
     @BeforeEach
-    public void beforeEach(){
+    public void beforeEach() {
         task = new Task("Zadacha task ", "Kakoy-to tekst", Status.NEW);
         task.setId(1);
         epic = new Epic("Zadacha epic", "Kakoy-to tekst epic", Status.NEW);
@@ -44,32 +46,34 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    void udalitzadachuizhead(){
+    void udalitzadachuizhead() {
         history.add(task);
         history.add(epic);
         history.add(subTask);
-        history.remove(task.getId());
+        history.remove(task.getTaskId());
         final List<Task> historyManager = history.getHistory();
         assertNotNull(historyManager, "Istoriya Pustaya");
         assertEquals(2, historyManager.size(), "Zapis ne udalena");
     }
+
     @Test
-    void udalitzadachuizseredini(){
+    void udalitzadachuizseredini() {
         history.add(task);
         history.add(epic);
         history.add(subTask);
-        history.remove(epic.getId());
+        history.remove(epic.getTaskId());
         final List<Task> historyManager = history.getHistory();
         assertNotNull(historyManager, "Istoriya Pustaya");
         assertEquals(2, historyManager.size(), "Zapis ne udalena");
     }
+
     @Test
-    void udalitzapisizhvosta(){
+    void udalitzapisizhvosta() {
 
         history.add(epic);
         history.add(subTask);
         history.add(task);
-        history.remove(task.getId());
+        history.remove(task.getTaskId());
         final List<Task> historyManager = history.getHistory();
         assertNotNull(historyManager, "Istoriya Pustaya");
         assertEquals(2, historyManager.size(), "Zapis ne udalena");
