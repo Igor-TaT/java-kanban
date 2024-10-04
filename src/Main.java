@@ -12,7 +12,7 @@ public class Main {
         tasker = taskManager.create(new Task("Новая задача2", "описание задачи2", Status.NEW));
         tasker = taskManager.create(new Task("Новая задача3", "описание задачи3", Status.NEW));
         tasker = taskManager.create(new Epic("Новая Эпик задача3", "описание эпик задачи3"));
-        tasker = taskManager.create(new SubTask("Новая подзадача3", "описание подзадачи3",Status.NEW,4));
+        tasker = taskManager.create(new SubTask("Новая подзадача3", "описание подзадачи3", Status.NEW, 4));
 
         taskManager.getTaskFromId(1);
 
@@ -37,7 +37,6 @@ public class Main {
         for (Task task : taskManager.getHistory()) {
             System.out.println(task);
         }
-
 
 
     }

@@ -120,7 +120,6 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
 
-
     @Override
     public Task getTaskFromId(long id) {
         history.add(tasks.get(id));

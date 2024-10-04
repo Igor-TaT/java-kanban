@@ -4,7 +4,7 @@ import task.Task;
 
 import java.util.*;
 
-public class InMemoryHistoryManager implements HistoryManager{
+public class InMemoryHistoryManager implements HistoryManager {
     private static class MyLinkedList {
         private final Map<Long, Node> taskHistoryList = new HashMap<>();
         private Node head;
@@ -80,7 +80,7 @@ public class InMemoryHistoryManager implements HistoryManager{
     }
 }
 
-    class Node {
+class Node {
     public Task task;
     public Node next;
     public Node prev;
