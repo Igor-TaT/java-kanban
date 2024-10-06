@@ -4,11 +4,12 @@ import task.Epic;
 import task.SubTask;
 import task.Task;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface TaskManager {
     List<Task> getHistory();
+
+    void remove(long id);
 
     Task create(Task task);
 
